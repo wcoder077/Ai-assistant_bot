@@ -328,9 +328,3 @@ class Database:
         cur = await self.conn.execute(query, params)
         await self._commit()
         return cur.rowcount > 0
-
-    async def update_reminder_due(self, reminder_id: int, due_at: str) -> None:
-        await self.conn.execute(
-            "UPDATE reminders SET due_at = ? WHERE id = ?", (due_at, reminder_id)
-        )
-        await self._commit()

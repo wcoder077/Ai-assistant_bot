@@ -11,7 +11,10 @@ from .formatting import escape_html
 
 log = logging.getLogger(__name__)
 
-REPEATS = ("none", "daily", "weekly")
+# Takrorlanish turlari — yagona manba. Kalitlar: bazada va vosita schemasida
+# ishlatiladigan qiymatlar; qiymatlar: foydalanuvchiga ko'rsatiladigan nom.
+REPEAT_LABELS = {"none": "once", "daily": "daily", "weekly": "weekly"}
+REPEATS = tuple(REPEAT_LABELS)
 
 
 def _job_name(reminder_id: int) -> str:

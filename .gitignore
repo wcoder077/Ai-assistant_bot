@@ -1,14 +1,29 @@
-venv/
-.venv/
-env/
-__pycache__/
-*.py[cod]
+# Sirlar — hech qachon git'ga tushmasin
 .env
 *.session
 *.session-journal
+
+# Python virtual muhiti
+venv/
+.venv/
+env/
+
+# Python keshi
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Bot ma'lumotlari (SQLite bazasi shu yerda yaratiladi)
+data/
 *.db
 *.sqlite3
+
+# Loglar
 *.log
 logs/
+
+# Muharrir va OS fayllari
 .idea/
 .vscode/
+.DS_Store
