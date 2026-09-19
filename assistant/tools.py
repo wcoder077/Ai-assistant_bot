@@ -15,7 +15,6 @@ from .db import Database
 
 log = logging.getLogger(__name__)
 
-REPEAT_LABELS = {"none": "once", "daily": "daily", "weekly": "weekly"}
 WEEKDAYS = [
     "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday",
 ]
@@ -217,7 +216,7 @@ async def _create_reminder(ctx: ToolContext, args: dict[str, Any]) -> str:
     local = due_utc.astimezone(zone)
     return (
         f"Eslatma #{reminder_id} yaratildi: '{text}' — "
-        f"{local:%Y-%m-%d %H:%M} ({REPEAT_LABELS[repeat]})."
+        f"{local:%Y-%m-%d %H:%M} ({reminders.REPEAT_LABELS[repeat]})."
     )
 
 

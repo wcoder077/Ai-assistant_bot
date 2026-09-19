@@ -27,7 +27,8 @@ from telegram.ext import (
 from . import agent, config, files, reminders
 from .db import Database
 from .formatting import split_message, to_telegram_html
-from .tools import REPEAT_LABELS, WEEKDAYS
+from .reminders import REPEAT_LABELS
+from .tools import WEEKDAYS
 
 log = logging.getLogger(__name__)
 

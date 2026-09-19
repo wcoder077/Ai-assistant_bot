@@ -75,7 +75,7 @@ hammasiga murojaat qilsa bo'ladi, faqat `base_url` ni almashtirish kifoya.
 > Diqqat: bu fayl import bo'lgan zahoti `.env` ni o'qiydi va token yo'q bo'lsa
 > `RuntimeError` beradi. Bu qasddan — bot yarim sozlangan holda ishga tushmasin.
 
-### `db.py` — ma'lumotlar bazasi (336 qator)
+### `db.py` — ma'lumotlar bazasi (330 qator)
 
 SQLite bilan ishlaydigan yagona fayl. 6 ta jadval:
 
@@ -119,7 +119,7 @@ Gemini har bir vosita chaqiruviga "thought signature" biriktiradi va keyingi
 so'rovda uni aynan qaytarmasang, 400 xato beradi. Boshqa provayderlarda bu
 maydon yo'q.
 
-### `tools.py` — model chaqira oladigan funksiyalar (341 qator)
+### `tools.py` — model chaqira oladigan funksiyalar (340 qator)
 
 11 ta vosita, uch qismdan iborat:
 
@@ -143,7 +143,7 @@ Vositalar ro'yxati:
 qaytaradi. Bu muhim: bot yiqilmaydi, model xatoni o'qib, foydalanuvchiga
 tushuntiradi yoki boshqacha urinib ko'radi.
 
-### `reminders.py` — vaqt bo'yicha ishga tushirish (96 qator)
+### `reminders.py` — vaqt bo'yicha ishga tushirish (99 qator)
 
 `python-telegram-bot` ning `JobQueue` (ichida APScheduler) ustidagi yupqa qatlam.
 
@@ -190,7 +190,7 @@ ichidagi belgilar buzilmaydi.
 uzun javobni avval xatboshi, keyin qator bo'yicha bo'ladi — so'z o'rtasidan
 kesmaydi.
 
-### `bot.py` — kirish nuqtasi (427 qator)
+### `bot.py` — kirish nuqtasi (428 qator)
 
 Telegram bilan bog'liq hamma narsa:
 
