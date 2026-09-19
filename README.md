@@ -15,6 +15,8 @@ avtomatik keyingisiga o'tadi va foydalanuvchi buni sezmaydi ham.
 - Internetdan qidirish — DuckDuckGo orqali, alohida kalit kerak emas
 - Fayllarni o'qish — PDF, Word (.docx), Excel (.xlsx), matn fayllari, rasmlar
 - Uzoq muddatli xotira — ismingiz, ishingiz, odatlaringizni eslab qoladi
+- Alohida suhbatlar — ChatGPT'dagi kabi mavzularni ajratib olish va ularga qaytish
+- Tugmalar — eslatma, vazifa va xotirani yozmasdan, bosib boshqarish
 
 **Nimalarni qila olmaydi:** Telegram akkauntingizni boshqarish, boshqa odamlarga xabar yuborish,
 qo'ng'iroq qilish, to'lov qilish, ovozli xabar va videoni tushunish.
@@ -61,17 +63,28 @@ va keyingi provayderga o'tadi.
 
 ## 2. Kompyuterda ishga tushirish
 
+**Linux / macOS:**
+
 ```bash
+python -m venv .venv
+.venv/bin/pip install -r requirements.txt
+cp .env.example .env
+```
+
+**Windows:**
+
+```bat
 python -m venv .venv
 .venv\Scripts\pip install -r requirements.txt
 copy .env.example .env
 ```
 
 `.env` faylini ochib `TELEGRAM_BOT_TOKEN` va kamida bitta provayder kalitini
-(masalan `GEMINI_API_KEY`) to'ldiring, so'ng:
+(masalan `GEMINI_API_KEY`) to'ldiring, so'ng ishga tushiring:
 
 ```bash
-.venv\Scripts\python -m assistant.bot
+.venv/bin/python -m assistant.bot      # Linux / macOS
+.venv\Scripts\python -m assistant.bot   # Windows
 ```
 
 Botga Telegram'da `/start` yozing. So'ng `/id` yuboring — u sizning ID raqamingizni qaytaradi.
@@ -134,6 +147,8 @@ sudo journalctl -u tg-assistant -f
 | `DB_PATH` | `data/assistant.db` | SQLite — suhbat, eslatma, vazifa va xotira shu yerda |
 | `HISTORY_LIMIT` | `40` | Modelga beriladigan oxirgi xabarlar soni |
 | `SEARCH_RESULTS` | `5` | Bitta qidiruvda olinadigan natijalar soni |
+| `MAX_TOOL_ITERATIONS` | `12` | Bitta javobda model vositani necha marta chaqira oladi |
+| `MAX_FILE_CHARS` | `200000` | Yuborilgan fayldan o'qiladigan belgilar soni |
 
 ## 5. Xarajatni kamaytirish
 
@@ -150,20 +165,48 @@ sudo journalctl -u tg-assistant -f
 |---|---|
 | `/start` | Boshlash va tanishtiruv |
 | `/help` | Imkoniyatlar ro'yxati |
-| `/reset` | Suhbat tarixini tozalash (eslatma va vazifalar saqlanadi) |
+| `/new` | Yangi suhbat boshlash (eskisi saqlanib qoladi) |
+| `/chats` | Oxirgi suhbatlar ro'yxati — birontasiga qaytish |
+| `/reminders` | Eslatmalar ro'yxati, bekor qilish tugmasi bilan |
+| `/tasks` | Vazifalar ro'yxati, bajarildi/o'chirish tugmalari bilan |
+| `/memory` | Bot siz haqingizda nimalarni eslab qolgan |
 | `/id` | Telegram ID raqamingiz |
+| `/reset` | Eski nom — `/new` bilan bir xil ishlaydi |
+
+Xuddi shu ishlarni pastdagi klaviatura tugmalari orqali ham bajarsa bo'ladi.
+
+> Eslatma, vazifa va xotira **suhbatdan mustaqil** — "Yangi suhbat" bosganingizda
+> ham ular o'chmaydi.
 
 ## 7. Loyiha tuzilishi
 
 ```
-assistant/
-├── bot.py          Telegram handlerlari, ishga tushirish
-├── agent.py        Model bilan muloqot sikli, system prompt
-├── tools.py        Model chaqira oladigan vositalar (qidiruv, eslatma, vazifa, xotira)
-├── reminders.py    Eslatmalarni rejalashtirish va yetkazish
-├── files.py        Telegram fayllarini model uchun tayyorlash
-├── formatting.py   Markdown → Telegram HTML
-├── db.py           SQLite
-└── config.py       .env sozlamalari
+.
+├── assistant/              Butun kod shu paketda
+│   ├── bot.py              Kirish nuqtasi: Telegram handlerlari, tugmalar
+│   ├── agent.py            Model bilan muloqot sikli, system prompt, provayder navbati
+│   ├── tools.py            Model chaqira oladigan 11 ta vosita
+│   ├── reminders.py        Eslatmalarni vaqt bo'yicha rejalashtirish va yetkazish
+│   ├── files.py            PDF/Word/Excel/rasmni model tushunadigan ko'rinishga o'tkazish
+│   ├── formatting.py       Markdown → Telegram HTML, uzun matnni bo'lish
+│   ├── db.py               SQLite: suhbat, eslatma, vazifa, xotira
+│   └── config.py           .env o'qish va tekshirish
+├── docs/
+│   └── ARCHITECTURE.md     Batafsil: qatlamlar, xabar yo'li, yangi vosita qo'shish
+├── data/                   SQLite bazasi shu yerda yaratiladi (git'ga tushmaydi)
+├── .env.example            Sozlama shabloni — nusxa olib .env qiling
+├── requirements.txt        Faqat bevosita kerak bo'lgan paketlar
+├── Dockerfile              Image yig'ish
+└── docker-compose.yml      24/7 ishlatish uchun
 ```
-# Ai-assistant_bot
+
+Ma'lumot oqimi qisqacha:
+
+```
+Telegram → bot.py → files.py → agent.py ⇄ tools.py → db.py / reminders.py
+                                   ↕
+                              AI provayder
+```
+
+Har bir faylning ichki mantiqi, xabarning to'liq yo'li va yangi vosita qo'shish
+bo'yicha qo'llanma — [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) da.

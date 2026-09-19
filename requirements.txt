@@ -1,31 +1,26 @@
-aiosqlite==0.22.1
-annotated-types==0.8.0
-anyio==4.15.1
-APScheduler==3.11.3
-certifi==2026.7.22
-click==8.5.0
-ddgs==9.16.0
-et_xmlfile==2.0.0
-h11==0.16.0
-httpcore==1.0.9
-httpcore2==2.13.0
-httpx==0.28.1
-httpx2==2.13.0
-idna==3.19
-jiter==0.17.0
-lxml==6.1.3
+# Faqat loyiha bevosita import qiladigan paketlar.
+# Qolganlari (httpx, pydantic, APScheduler, lxml, primp...) shular orqali
+# avtomatik o'rnatiladi — ularni bu yerga yozish shart emas.
+
+# Telegram bot karkasi. [job-queue] — eslatmalar uchun APScheduler'ni tortadi.
+python-telegram-bot[job-queue]==22.8
+
+# AI model bilan gaplashish (OpenAI-mos har qanday provayder: Gemini, Groq, ...)
 openai==3.14.0
-openpyxl==3.1.5
-primp==2.0.1
-pydantic==2.13.5
-pydantic_core==2.46.5
-pypdf==6.18.1
-python-docx==1.2.0
+
+# Ma'lumotlar bazasi (asinxron SQLite)
+aiosqlite==0.22.1
+
+# Internetdan qidirish — DuckDuckGo, kalit talab qilmaydi
+ddgs==9.16.0
+
+# .env faylini o'qish
 python-dotenv==1.2.3
-python-telegram-bot==22.8
-sniffio==1.3.1
-truststore==0.10.4
-typing-inspection==0.4.4
-typing_extensions==4.16.0
+
+# Foydalanuvchi yuborgan fayllarni matnga aylantirish
+pypdf==6.18.1          # PDF
+python-docx==1.2.0     # Word (.docx)
+openpyxl==3.1.5        # Excel (.xlsx)
+
+# Vaqt mintaqalari bazasi — Windows va slim Docker image'da tizimda yo'q
 tzdata==2026.4
-tzlocal==5.4.4

@@ -1,0 +1,17 @@
+# Docker build kontekstiga tushmasligi kerak bo'lganlar.
+# Eng muhimi .env va .git — ular image ichiga ketib qolmasin.
+.env
+.git/
+.gitignore
+data/
+docs/
+README.md
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.db
+*.sqlite3
+*.log
+.idea/
+.vscode/
